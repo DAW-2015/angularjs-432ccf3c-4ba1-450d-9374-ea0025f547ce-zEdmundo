@@ -4,6 +4,8 @@ João Eduardo Montandon
 
 Desenvolvimento de Aplicativos Web - 2015
 
+*OBS: Para cada exercício deverá ser gerado pelo menos um commit referente ao mesmo.*
+
 1. Altere o controller temperaturaController para suportar a conversão de Celsius para Fahrenheit
 2. Crie o controller impostoController que calcule, com base no valor fornecido pelo usuário, que ele irá pagar sob seu salário. Utilize o mesmo arquivo html como visão. Para cálculo do imposto, considere:
   * Salários < 2000: 10%
