@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script>
+      var app = angular.module("myApp", []);
+      app.controller("impostoController", function () {
+
+        this.salario = 0;
+
+        this.calculaImposto = function (salario) {
+          if (salario < 2000)
+            return salario * 0.10;
+          else if (salario >= 2000 && salario <= 3500)
+            return salario * 0.20;
+          else
+            return salario * 0.30;
+        };
+
+      });
+    </script>
+  </head>
+  <body>
+    <div ng-controller="impostoController as impCtrl">
+      Salário: <input type="number" ng-model="impCtrl.salario" value=""> <br/>
+      Imposto: <span>{{ impCtrl.calculaImposto(impCtrl.salario) }}</span>
+    </div>
+  </body>
+</html>
