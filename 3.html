@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      strong, ul {
+        display: block;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script>
+      var app = angular.module("myApp", []);
+      app.controller("reviewController", function () {
+
+        this.avaliacao  = 1;
+        this.comentario = "Type something here...";
+        this.avaliacoes = [];
+
+        this.submit = function () {
+          this.avaliacoes.push({
+            "avaliacao": this.avaliacao,
+            "comentario": this.comentario
+          });
+
+          this.avaliacao  = 1;
+          this.comentario = "Type something here...";
+        }
+
+      });
+    </script>
+  </head>
+  <body>
+    <div ng-controller="reviewController as revCtrl">
+      <strong>Avaliação</strong>
+      <ul>
+        <li ng-repeat="c in [1, 2, 3, 4, 5]">
+          <input id="avalia-{{ c }}" name="avaliacao" type="radio" ng-model="revCtrl.avaliacao" ng-value="{{ c | number }}" /> <label for="avalia-{{ c }}">{{ c }} estrela(s)</label>
+        </li>
+      </ul>
+
+      <strong>Comentário</strong>
+      <textarea ng-model="revCtrl.comentario" rows="8" cols="40"></textarea>
+
+      <button type="button" ng-click="revCtrl.submit()">Enviar Review</button>
+
+      <strong>Preview</strong>
+      Avaliação: <span ng-bind="revCtrl.avaliacao"></span> estrela(s) <br />
+      Comentário: <span ng-bind="revCtrl.comentario"></span>
+
+      <strong>Avaliacoes</strong>
+      <ul>
+        <li ng-repeat="avaliacao in revCtrl.avaliacoes">
+          <strong>#{{ $index + 1 }}</strong>
+          Avaliação:  <span>{{ avaliacao.avaliacao }}</span> estrela(s) <br />
+          Comentário: <span>{{ avaliacao.comentario }}</span> <br />
+          <br />
+        </li>
+      </ul>
+
+    </div>
+  </body>
+</html>
