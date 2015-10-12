@@ -34,6 +34,14 @@
       table td input, table td.focused span {
         display: none;
       }
+
+      table td input {
+        border: 1px solid red;
+      }
+
+      table td > * {
+        width: 100%;
+      }
     </style>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
@@ -63,10 +71,6 @@
           this.nome  = "";
           this.tel   = "";
           this.email = "";
-        }
-
-        this.edit = function (index, object) {
-
         }
 
         this.excluir = function (index) {
@@ -105,18 +109,24 @@
               <td>Nome</td>
               <td>Telefone</td>
               <td>E-Mail</td>
-              <td>Excluir</td>
+              <td>Ferramentas</td>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="contato in conCtrl.contatos">
-              <td>{{ $index }}</td>
-              <td ng-class="{focused: focus-1}">
+              <td ng-init="focus_$index = [0, 0, 0]">{{ $index }}</td>
+              <td ng-mouseleave="focus_$index = [0, 0, 0]; " ng-mouseenter="focus_$index = [1, 0, 0]; " ng-class="{focused: focus_$index[0]}">
                 <input type="text" value="{{ contato.nome }}" ng-model="conCtrl.contatos[$index].nome">
-                <span ng-click="focus-1 = 1; ">{{ conCtrl.contatos[$index].nome }}</span>
+                <span>{{ conCtrl.contatos[$index].nome }}</span>
               </td>
-              <td>{{ contato.tel }}</td>
-              <td>{{ contato.email }}</td>
+              <td ng-mouseleave="focus_$index = [0, 0, 0]; " ng-mouseenter="focus_$index = [0, 1, 0]; " ng-class="{focused: focus_$index[1]}">
+                <input type="text" value="{{ contato.tel }}" ng-model="conCtrl.contatos[$index].tel">
+                <span>{{ conCtrl.contatos[$index].tel }}</span>
+              </td>
+              <td ng-mouseleave="focus_$index = [0, 0, 0]; " ng-mouseenter="focus_$index = [0, 0, 1]; " ng-class="{focused: focus_$index[2]}">
+                <input type="text" value="{{ contato.email }}" ng-model="conCtrl.contatos[$index].email">
+                <span>{{ conCtrl.contatos[$index].email }}</span>
+              </td>
               <td><button ng-click="conCtrl.excluir($index)">Excluir</button></td>
             </tr>
           </tbody>
