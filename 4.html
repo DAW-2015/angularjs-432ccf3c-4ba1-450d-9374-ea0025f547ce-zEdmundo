@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      strong {
+        display: block;
+      }
+
+      .line:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+
+      table {
+        border: 1.5px #000 solid;
+      }
+
+      table td {
+        border: 1px #000 dotted;
+      }
+
+      table td span, table td.focused input {
+        display: block;
+      }
+
+      table td input, table td.focused span {
+        display: none;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.min.js"></script>
+    <script>
+      var app = angular.module("myApp", []);
+      app.controller("ContactController", function () {
+
+        // nome, telefone, email
+        this.nome  = "";
+        this.tel   = "";
+        this.email = "";
+
+        this.contatos = [
+          {"nome": "Edmundo", "tel": "ipsum", "email": "sitamet" },
+          {"nome": "Ana", "tel": "qwewq", "email": "qweqeew" },
+          {"nome": "Rafael", "tel": "qwewq", "email": "qweqeew" },
+          {"nome": "Lorem", "tel": "qwewq", "email": "qweqeew" },
+        ];
+
+        this.insere = function () {
+          this.contatos.push({
+            "nome":  this.nome,
+            "tel":   this.tel,
+            "email": this.email
+          });
+
+          this.nome  = "";
+          this.tel   = "";
+          this.email = "";
+        }
+
+        this.edit = function (index, object) {
+
+        }
+
+        this.excluir = function (index) {
+          this.contatos.splice(index, 1);
+        }
+
+      });
+    </script>
+  </head>
+  <body>
+    <div ng-controller="ContactController as conCtrl">
+      <div class="line">
+        <strong>Nome</strong>
+        <input type="text" ng-model="conCtrl.nome" />
+      </div>
+
+      <div class="line">
+        <strong>Telefone</strong>
+        <input type="text" ng-model="conCtrl.tel" />
+      </div>
+
+      <div class="line">
+        <strong>E-Mail</strong>
+        <input type="text" ng-model="conCtrl.email" />
+      </div>
+
+      <div class="line">
+        <button ng-click="conCtrl.insere()">Inserir Contato</button>
+      </div>
+
+      <div class="line">
+        <table>
+          <thead>
+            <tr>
+              <td>#</td>
+              <td>Nome</td>
+              <td>Telefone</td>
+              <td>E-Mail</td>
+              <td>Excluir</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="contato in conCtrl.contatos">
+              <td>{{ $index }}</td>
+              <td ng-class="{focused: focus-1}">
+                <input type="text" value="{{ contato.nome }}" ng-model="conCtrl.contatos[$index].nome">
+                <span ng-click="focus-1 = 1; ">{{ conCtrl.contatos[$index].nome }}</span>
+              </td>
+              <td>{{ contato.tel }}</td>
+              <td>{{ contato.email }}</td>
+              <td><button ng-click="conCtrl.excluir($index)">Excluir</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
